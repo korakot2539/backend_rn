@@ -1,5 +1,3 @@
-// index.js
-
 var express = require("express");
 var cors = require("cors");
 var mongoose = require("mongoose");
@@ -36,9 +34,11 @@ app.get("/", (req, res) => {
   res.status(200).send("หน้าแรกของ api express");
 });
 
-// path for MongDB
-var Admin = require("./admin_router");
-app.use("/api/admin",Admin);
+// path สำหรับ MongoDB ของเรา
+var Admin = require("./app/routes/admin.router");
+app.use("/api/admin", Admin);
+var List = require("./app/routes/list.router");
+app.use("/api/list", List);
 
 app.use((req, res, next) => {
   var err = new Error("ไม่พบ path ที่คุณต้องการ");

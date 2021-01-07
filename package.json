@@ -1,8 +1,8 @@
 {
   "name": "backend_rn",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Node.js Restful CRUD API with Node.js, Express and MongoDB",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js"
@@ -13,6 +13,7 @@
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "md5": "^2.3.0",
     "mongoose": "^5.11.8"
   }
 }
