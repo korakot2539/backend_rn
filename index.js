@@ -39,6 +39,12 @@ var Admin = require("./app/routes/admin.router");
 app.use("/api/admin", Admin);
 var List = require("./app/routes/list.router");
 app.use("/api/list", List);
+var Member = require("./app/routes/member.router");
+app.use("/api/member", Member);
+var Queue = require("./app/routes/queue.router");
+app.use("/api/queue", Queue);
+var Auth = require("./app/routes/authen.router");
+app.use("/api", Auth);
 
 app.use((req, res, next) => {
   var err = new Error("ไม่พบ path ที่คุณต้องการ");
