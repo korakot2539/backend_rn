@@ -6,6 +6,7 @@ var memberSchema = mongoose.Schema(
     UID: {type: String},
     NAME: {type: String},
     SURNAME: {type: String},
+    IDNUMBER: {type: String},
     PHONE: {type: String},
     ADDRESS: {type: String},
     GENDER: {type: String},
