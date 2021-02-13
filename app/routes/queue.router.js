@@ -1,10 +1,12 @@
 var express = require("express");
 var router = express.Router();
-var Admin = require("../models/queue.model");
+var Queue = require("../models/queue.model");
+var Member = require("../models/member.model");
+var List = require("../models/list.model");
 
 // GET all
 router.get("/", (req, res) => {
-  Admin.find().exec((err, data) => {
+  Queue.find().exec((err, data) => {
     if (err) return res.status(400).send(err);
     res.status(200).send(data);
   });
@@ -13,15 +15,30 @@ router.get("/", (req, res) => {
 // GET 1
 router.get("/:QUEUE", (req, res) => {
   var {QUEUE} = req.params;
-  Admin.findOne({QUEUE}).exec((err, data) => {
+  Queue.findOne({QUEUE}).exec((err, data) => {
     if (err) return res.status(400).send(err);
     res.status(200).send(data);
   });
 });
 
+// GET QUEUE BY USER
+router.get("/byuid/:UID", (req, res) => {
+  var {UID} = req.params;
+  Queue.find({UID})
+        // .populate("USERDETAIL ADMINDETAIL")
+        // .populate([
+        //   {Path:"USERDETAIL ",model:"MEMBER"},
+        //   {Path:"ADMINDETAIL",model:"MEMBER"}
+        // ])
+        .exec((err, data) => {
+          if (err) return res.status(400).send(err);
+          return res.status(200).send(data);
+        });
+});
+
 // POST (create new data)
 router.post("/", (req, res) => {
-  var obj = new Admin(req.body);
+  var obj = new Queue(req.body);
   obj.save((err, data) => {
     if (err) return res.status(400).send(err);
     res.status(200).send("เพิ่มข้อมูลเรียบร้อย");
@@ -31,7 +48,7 @@ router.post("/", (req, res) => {
 // PUT (update current data)
 router.put("/:QUEUE", (req, res) => {
   var {QUEUE} = req.params;
-  Admin.findOneAndUpdate({QUEUE}, req.body, (err, data) => {
+  Queue.findOneAndUpdate({QUEUE}, req.body, (err, data) => {
     if (err) return res.status(400).send(err);
     res.status(200).send("อัพเดทข้อมูลเรียบร้อย");
   });
@@ -40,7 +57,7 @@ router.put("/:QUEUE", (req, res) => {
 // DELETE (delete 1 data)
 router.delete("/:QUEUE", (req, res) => {
   var {QUEUE} = req.params;
-  Admin.findOneAndDelete({QUEUE}, (err, data) => {
+  Queue.findOneAndDelete({QUEUE}, (err, data) => {
     if (err) return res.status(400).send(err);
     res.status(200).send("ลบข้อมูลเรียบร้อย");
   });
