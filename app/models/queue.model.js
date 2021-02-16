@@ -9,7 +9,8 @@ var queueSchema = Schema(
     // กำหนด ชื่อและชนิดของ document เรา
     QUEUE: String,
     UID: String,
-    DATETIME: String,
+    DATE: String,
+    TIME: String,
     LIST_ID: String,
     ADMIN_ID: String,
     USERDETAIL:{
