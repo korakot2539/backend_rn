@@ -13,17 +13,13 @@ var queueSchema = Schema(
     TIME: String,
     LIST_ID: String,
     ADMIN_ID: String,
-    USERDETAIL:{
-        type: Schema.Types.ObjectId, 
-        ref:"MEMBER"
-    },
     ADMINDETAIL:{
-      type: Schema.Types.ObjectId,
-      ref:"MEMBER"
+      NAME:String,
+      SURNAME:String
     },
     LISTDETAIL:{
-      type: Schema.Types.ObjectId,
-      ref:"LIST"
+      LIST:String,
+      PRICE:String
     }
   },
   {
