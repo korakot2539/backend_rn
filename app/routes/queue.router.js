@@ -4,11 +4,39 @@ var Queue = require("../models/queue.model");
 var Member = require("../models/member.model");
 var List = require("../models/list.model");
 
+var list;
+var admin;
+List.find().exec((err, data_list) => {
+          list = data_list;
+        });
+Member.find().exec((err, data_admin) => {
+          admin = data_admin;
+        });
+
 // GET all
 router.get("/", (req, res) => {
   Queue.find().exec((err, data) => {
-    if (err) return res.status(400).send(err);
-    res.status(200).send(data);
+    if (err) {
+      return res.status(400).send(err);
+    }else{
+      for(let i=0; i<data.length;i++){
+        for(let j=0; j<list.length;j++){
+          if(data[i].LIST_ID===list[j].ID){
+            data[i].LISTDETAIL.LIST=list[j].LIST;
+            data[i].LISTDETAIL.PRICE=list[j].PRICE;
+          }
+        }
+      }
+      for(let i=0; i<data.length;i++){
+        for(let j=0; j<admin.length;j++){
+          if(data[i].ADMIN_ID===admin[j].UID){
+            data[i].ADMINDETAIL.NAME=admin[j].NAME;
+            data[i].ADMINDETAIL.SURNAME=admin[j].SURNAME;
+          }
+        }
+      }
+      return res.status(200).send(data);
+    }
   });
 });
 
@@ -16,8 +44,26 @@ router.get("/", (req, res) => {
 router.get("/:QUEUE", (req, res) => {
   var {QUEUE} = req.params;
   Queue.findOne({QUEUE}).exec((err, data) => {
-    if (err) return res.status(400).send(err);
-    res.status(200).send(data);
+    if (err) {
+      return res.status(400).send(err);
+    }else{
+
+      for(let j=0; j<list.length;j++){
+          if(data.LIST_ID===list[j].ID){
+            data.LISTDETAIL.LIST=list[j].LIST;
+            data.LISTDETAIL.PRICE=list[j].PRICE;
+          }
+      }
+
+      for(let j=0; j<admin.length;j++){
+          if(data.ADMIN_ID===admin[j].UID){
+            data.ADMINDETAIL.NAME=admin[j].NAME;
+            data.ADMINDETAIL.SURNAME=admin[j].SURNAME;
+          }
+      }
+
+      return res.status(200).send(data);
+    }
   });
 });
 
@@ -25,14 +71,28 @@ router.get("/:QUEUE", (req, res) => {
 router.get("/byuid/:UID", (req, res) => {
   var {UID} = req.params;
   Queue.find({UID})
-        // .populate("USERDETAIL ADMINDETAIL")
-        // .populate([
-        //   {Path:"USERDETAIL ",model:"MEMBER"},
-        //   {Path:"ADMINDETAIL",model:"MEMBER"}
-        // ])
         .exec((err, data) => {
-          if (err) return res.status(400).send(err);
-          return res.status(200).send(data);
+          if (err) {
+            return res.status(400).send(err);
+          }else{
+            for(let i=0; i<data.length;i++){
+              for(let j=0; j<list.length;j++){
+                if(data[i].LIST_ID===list[j].ID){
+                  data[i].LISTDETAIL.LIST=list[j].LIST;
+                  data[i].LISTDETAIL.PRICE=list[j].PRICE;
+                }
+              }
+            }
+            for(let i=0; i<data.length;i++){
+              for(let j=0; j<admin.length;j++){
+                if(data[i].ADMIN_ID===admin[j].UID){
+                  data[i].ADMINDETAIL.NAME=admin[j].NAME;
+                  data[i].ADMINDETAIL.SURNAME=admin[j].SURNAME;
+                }
+              }
+            }
+            return res.status(200).send(data);
+          }
         });
 });
 
