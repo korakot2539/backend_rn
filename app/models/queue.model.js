@@ -1,5 +1,6 @@
 var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
+var autoIncrement = require('mongoose-auto-increment');
 
 var MEMBER = require("./member.model");
 var LIST = require("./list.model");
@@ -7,7 +8,7 @@ var LIST = require("./list.model");
 var queueSchema = Schema(
   {
     // กำหนด ชื่อและชนิดของ document เรา
-    QUEUE: String,
+    QUEUE: Number,
     UID: String,
     DATE: String,
     TIME: String,
