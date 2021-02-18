@@ -105,7 +105,6 @@ router.post("/", (req, res) => {
   var obj = new Queue(req.body);
   obj.QUEUE = queue_number;
 
-  res.status(200).send(obj);
   obj.save((err, data) => {
     if (err) return res.status(400).send(err);
     res.status(200).send("เพิ่มข้อมูลเรียบร้อย");
