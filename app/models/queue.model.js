@@ -20,7 +20,8 @@ var queueSchema = Schema(
     LISTDETAIL:{
       LIST:String,
       PRICE:String
-    }
+    },
+    STATUS:String
   },
   {
     // กำหนด collection ของ MongoDB หรือจะไม่กำหนดก็ได้
