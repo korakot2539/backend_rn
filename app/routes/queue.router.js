@@ -4,13 +4,15 @@ var Queue = require("../models/queue.model");
 var Member = require("../models/member.model");
 var List = require("../models/list.model");
 
-var list;
-var admin;
+var list, admin, queue;
 List.find().exec((err, data_list) => {
           list = data_list;
         });
 Member.find().exec((err, data_admin) => {
           admin = data_admin;
+        });
+Queue.find().exec((err, data_queue) => {
+          queue = data_queue;
         });
 
 // GET all
@@ -98,7 +100,12 @@ router.get("/byuid/:UID", (req, res) => {
 
 // POST (create new data)
 router.post("/", (req, res) => {
+
+  var queue_number = queue.length+1;
   var obj = new Queue(req.body);
+  obj.QUEUE = queue_number;
+
+  res.status(200).send(obj);
   obj.save((err, data) => {
     if (err) return res.status(400).send(err);
     res.status(200).send("เพิ่มข้อมูลเรียบร้อย");
