@@ -1,6 +1,5 @@
 var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
-var autoIncrement = require('mongoose-auto-increment');
 
 var MEMBER = require("./member.model");
 var LIST = require("./list.model");
