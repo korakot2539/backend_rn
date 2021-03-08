@@ -98,6 +98,36 @@ router.get("/byuid/:UID", (req, res) => {
         });
 });
 
+// GET QUEUE BY USER
+router.get("/bydate/:DATE", (req, res) => {
+  var {DATE} = req.params;
+  // return res.status(200).send({DATE});
+  Queue.find({DATE})
+        .exec((err, data) => {
+          if (err) {
+            return res.status(400).send(err);
+          }else{
+            for(let i=0; i<data.length;i++){
+              for(let j=0; j<list.length;j++){
+                if(data[i].LIST_ID===list[j].ID){
+                  data[i].LISTDETAIL.LIST=list[j].LIST;
+                  data[i].LISTDETAIL.PRICE=list[j].PRICE;
+                }
+              }
+            }
+            for(let i=0; i<data.length;i++){
+              for(let j=0; j<admin.length;j++){
+                if(data[i].ADMIN_ID===admin[j].UID){
+                  data[i].ADMINDETAIL.NAME=admin[j].NAME;
+                  data[i].ADMINDETAIL.SURNAME=admin[j].SURNAME;
+                }
+              }
+            }
+            return res.status(200).send(data);
+          }
+        });
+});
+
 // POST (create new data)
 router.post("/", (req, res) => {
 
