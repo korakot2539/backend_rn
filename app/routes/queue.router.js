@@ -45,7 +45,7 @@ router.get("/", (req, res) => {
 // GET 1
 router.get("/:QUEUE", (req, res) => {
   var {QUEUE} = req.params;
-  Queue.findOne({QUEUE}).exec((err, data) => {
+  Queue.find({QUEUE}).exec((err, data) => {
     if (err) {
       return res.status(400).send(err);
     }else{
