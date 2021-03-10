@@ -47,24 +47,25 @@ router.get("/:QUEUE", (req, res) => {
   var {QUEUE} = req.params;
   Queue.find({QUEUE}).exec((err, data) => {
     if (err) {
-      return res.status(400).send(err);
-    }else{
-
-      for(let j=0; j<list.length;j++){
-          if(data.LIST_ID===list[j].ID){
-            data.LISTDETAIL.LIST=list[j].LIST;
-            data.LISTDETAIL.PRICE=list[j].PRICE;
-          }
-      }
-
-      for(let j=0; j<admin.length;j++){
-          if(data.ADMIN_ID===admin[j].UID){
-            data.ADMINDETAIL.NAME=admin[j].NAME;
-            data.ADMINDETAIL.SURNAME=admin[j].SURNAME;
-          }
-      }
-
-      return res.status(200).send(data);
+            return res.status(400).send(err);
+          }else{
+            for(let i=0; i<data.length;i++){
+              for(let j=0; j<list.length;j++){
+                if(data[i].LIST_ID===list[j].ID){
+                  data[i].LISTDETAIL.LIST=list[j].LIST;
+                  data[i].LISTDETAIL.PRICE=list[j].PRICE;
+                }
+              }
+            }
+            for(let i=0; i<data.length;i++){
+              for(let j=0; j<admin.length;j++){
+                if(data[i].ADMIN_ID===admin[j].UID){
+                  data[i].ADMINDETAIL.NAME=admin[j].NAME;
+                  data[i].ADMINDETAIL.SURNAME=admin[j].SURNAME;
+                }
+              }
+            }
+            return res.status(200).send(data);
     }
   });
 });
