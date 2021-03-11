@@ -131,9 +131,7 @@ router.get("/bydate/:DATE", (req, res) => {
 // POST (create new data)
 router.post("/", (req, res) => {
 
-  var queue_number = queue.length+1;
   var obj = new Queue(req.body);
-  obj.QUEUE = queue_number;
 
   obj.save((err, data) => {
     if (err) return res.status(400).send(err);
